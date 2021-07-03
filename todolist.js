@@ -7,16 +7,22 @@ for(let i = 0; i < username.length; i++) {
 }
 
 const toDoList = {}
+const priorityStatus = {
+    High: 0,
+    Medium: 0,
+    Low: 0
+} 
 
 function renderToDoList() {
     const toDoContainer = document.getElementById('to-do-list-container')
     toDoContainer.innerHTML = ''
-
-
-
+    
+    
     if(Object.keys(toDoList).length === 0) {
-        toDoContainer.innerHTML = '<p class="alert alert-danger">You dont have any to-do-list. Start adding one!</p>'
+        toDoContainer.removeAttribute('style') // Remove border
+        toDoContainer.innerHTML = '<p class="alert alert-warning">You dont have any to-do-list. Start adding one!</p>'
     } else {
+        toDoContainer.setAttribute('style','border: 1px solid rgb(226,226,226)')
 
         const table = document.createElement('table')
         table.setAttribute('class','table')
@@ -60,21 +66,39 @@ function renderToDoList() {
     }
 
     renderAllToDoModal() // Render modal lagi
+    renderStatistics() // Update statistics
 
     return toDoList
+}
+
+function renderStatistics() {
+    const taskStatistics = document.getElementById('task-statistics')
+    if(Object.keys(toDoList).length === 0) {
+        taskStatistics.innerHTML = '<p class="alert alert-warning" style="width: 80%; margin: auto;">Stats not available, start adding to-do-list!</p><br>'
+    } else {
+        taskStatistics.innerHTML = `<button type="button" class="btn btn-danger">
+            <h4>High Priority Tasks</h4>
+            <h5><span id="high-prio-task">${priorityStatus.High}</span></h5>
+        </button><br><br>
+        <button type="button" class="btn btn-warning">
+            <h4>Medium Priority Tasks</h4>
+            <h5><span id="med-prio-task">${priorityStatus.Medium}</span></h5>
+        </button><br><br>
+        <button type="button" class="btn btn-success">
+            <h4>Low Priority Tasks</h4>
+            <h5><span id="low-prio-task">${priorityStatus.Low}</span></h5>
+        </button><br><br>`
+    }
 }
 
 function renderAllToDoModal() {
 
     const kumpulanModal = document.getElementById('to-do-list-modal')
-    console.log(kumpulanModal)
+
     kumpulanModal.innerHTML = '' // Reset
 
     for(let id in toDoList) {
-        console.log(`jalan ke ${id}`)
-        console.log(toDoList[id].deadline, '<<deadline')
         let deadlineString = dateToString(toDoList[id].deadline,'in-modal')
-        console.log(deadlineString)
         let deadlineButtonType = getButtonTypeByPriority(toDoList[id].priority)
 
         const newModal = document.createElement('div')
@@ -128,7 +152,6 @@ function renderAllToDoModal() {
         kumpulanModal.appendChild(newModal)
     }
 
-    console.log(kumpulanModal)
 
 }
 
@@ -171,7 +194,7 @@ function dateToString(str, place) {
     }
 
     let date = str.split('-') // ["2021","07","03"]
-    console.log(date)
+
     if(place === 'not-in-modal') return `${date[2]} ${monthsNotInModal[Number(date[1])]}`
     else if(place === 'in-modal') return `${date[2]} ${monthsInModal[Number(date[1])]} ${date[0]}`
 }
@@ -193,7 +216,7 @@ function addToDoList() {
     const taskPrio = document.getElementById('task-prio')
     const taskDeadline = document.getElementById('task-deadline')
 
-    if(taskName.value === '' || taskDescription.value === '' || taskPrio.value === '' || taskDeadline === '') {
+    if(!taskName.value || !taskDescription.value || !taskPrio.value || taskDeadline === undefined) {
         return $('#errorModal').modal('show');
     }
 
@@ -207,7 +230,10 @@ function addToDoList() {
     toDoList[latestToDoListID+1].deadline = taskDeadline.value
     toDoList[latestToDoListID+1].description = taskDescription.value
 
-    // Reset
+    // Add to frequency status
+    priorityStatus[taskPrio.value]++
+
+    // Reset DOM
     taskName.value = ''
     taskPrio.value = ''
     taskDescription.value = ''
@@ -217,8 +243,17 @@ function addToDoList() {
 }
 
 function deleteToDoList(id) {
+
+    // Update frequency status
+    priorityStatus[toDoList[id].priority]--
+
+    // Delete from todolist
     delete toDoList[id]
+
+    // Hide modal
     $(`#modal-${id}`).modal('hide')
+
+    // Render
     renderToDoList()
     return toDoList
 }
