@@ -6,13 +6,13 @@ for(let i = 0; i < username.length; i++) {
     username[i].innerHTML = currentUser[0].name
 }
 
-
-
 const toDoList = {}
 
 function renderToDoList() {
     const toDoContainer = document.getElementById('to-do-list-container')
     toDoContainer.innerHTML = ''
+
+
 
     if(Object.keys(toDoList).length === 0) {
         toDoContainer.innerHTML = '<p class="alert alert-danger">You dont have any to-do-list. Start adding one!</p>'
@@ -36,24 +36,19 @@ function renderToDoList() {
 
         const bodyTable = document.getElementById('tbody-to-do')
 
+
         for(let id in toDoList) {
-            let buttonStyle = ''
-            if(toDoList[id].priority === 'High') {
-                buttonStyle = 'btn-danger'
-            } else if(toDoList[id].priority === 'Medium') {
-                buttonStyle = 'btn-warning'
-            } else {
-                buttonStyle = 'btn-success'
-            }
+            let buttonType = getButtonTypeByPriority(toDoList[id].priority)
+            let dateString = dateToString(toDoList[id].deadline,'not-in-modal')
 
             const trTable = document.createElement('tr')
 
             trTable.innerHTML = `<tr>
-                <td>${toDoList[id].taskName}</td>
+                <td><button type="button" class="btn btn-outline-primary" onclick="showToDoListModal(${id})">${toDoList[id].taskName}</button></td>
                 <td>
-                    <button type="button" class="btn ${buttonStyle} my-btn">${toDoList[id].priority}</button>
+                    <button type="button" class="btn ${buttonType} my-btn">${toDoList[id].priority}</button>
                 </td>
-                <td>${toDoList[id].deadline}</td>
+                <td>${dateString}</td>
                 <td>
                     <button type="button" class="btn btn-primary btn-sm my-btn" onclick="editToDoList(${id})">Edit</button>
                     <button type="button" class="btn btn-danger btn-sm my-btn" onclick="deleteToDoList(${id})">Delete</button>
@@ -63,23 +58,90 @@ function renderToDoList() {
             bodyTable.appendChild(trTable)
         }
     }
-    console.log(toDoList)
+
+    renderAllToDoModal() // Render modal lagi
+
     return toDoList
 }
 
+function renderAllToDoModal() {
 
-function addToDoList() {
-    
-    const taskName = document.getElementById('task-name')
-    const taskDescription = document.getElementById('task-desc')
-    const taskPrio = document.getElementById('task-prio')
-    const taskDeadline = document.getElementById('task-deadline').value // 2021-07-03
+    const kumpulanModal = document.getElementById('to-do-list-modal')
+    console.log(kumpulanModal)
+    kumpulanModal.innerHTML = '' // Reset
 
-    if(taskName.value === '' || taskDescription.value === '' || taskPrio.value === '' || taskDeadline === '') {
-        return alert('Please fill in all the form')
+    for(let id in toDoList) {
+        console.log(`jalan ke ${id}`)
+        console.log(toDoList[id].deadline, '<<deadline')
+        let deadlineString = dateToString(toDoList[id].deadline,'in-modal')
+        console.log(deadlineString)
+        let deadlineButtonType = getButtonTypeByPriority(toDoList[id].priority)
+
+        const newModal = document.createElement('div')
+        newModal.setAttribute('class','modal fade')
+        newModal.setAttribute('id',`modal-${id}`)
+        newModal.setAttribute('tabIndex',`-1`)
+        newModal.setAttribute('role',`dialog`)
+        newModal.setAttribute('role',`dialog`)
+        newModal.setAttribute('aria-labelledby',`modal-label-${id}`)
+        newModal.setAttribute('aria-hidden',`true`)
+
+        const divContent = `<div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-label-${id}">Todos</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5>Task name</h5>
+                    <div class="alert alert-info" role="alert">
+                        <h6>${toDoList[id].taskName}</h6>
+                    </div><hr>
+
+                    <h5>Task description</h5>
+                    <div class="alert alert-info" role="alert">
+                        <h6>${toDoList[id].description}</h6>
+                    </div><hr>
+
+                    <h5>Task deadline</h5>
+                    <div class="alert alert-warning" role="alert">
+                        <h6>${deadlineString}</h6>
+                    </div><hr>
+
+                    <h5>Task priority</h5>
+                    <div class="alert alert-warning" role="alert">
+                        <button type="button" class="btn ${deadlineButtonType} btn-sm my-btn">${toDoList[id].priority}</button>
+                    </div><hr>
+                    
+                    <button type="button" class="btn btn-primary btn-sm my-btn">Edit this todos</button>
+                    <button type="button" class="btn btn-danger btn-sm my-btn" onclick="deleteToDoList(${id})">Delete this todos</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>`
+
+        newModal.innerHTML = divContent
+        kumpulanModal.appendChild(newModal)
     }
 
-    const months = {
+    console.log(kumpulanModal)
+
+}
+
+function showToDoListModal(id) {
+    return $(`#modal-${id}`).modal('show');
+}
+
+// Place: 'modal','not-modal'
+// Input: 2021-07-03
+// Output: 3 Jul (not-modal)
+// Output: 3 July 2021 (modal)
+function dateToString(str, place) {
+    const monthsNotInModal = {
         01: 'Jan',
         02: 'Feb',
         03: 'Mar',
@@ -93,11 +155,47 @@ function addToDoList() {
         11: 'Nov',
         12: 'Dec',
     }
+    const monthsInModal = {
+        01: 'January',
+        02: 'February',
+        03: 'March',
+        04: 'April',
+        05: 'May',
+        06: 'June',
+        07: 'July',
+        08: 'August',
+        09: 'September',
+        10: 'October',
+        11: 'November',
+        12: 'December',
+    }
 
+    let date = str.split('-') // ["2021","07","03"]
+    console.log(date)
+    if(place === 'not-in-modal') return `${date[2]} ${monthsNotInModal[Number(date[1])]}`
+    else if(place === 'in-modal') return `${date[2]} ${monthsInModal[Number(date[1])]} ${date[0]}`
+}
 
-    let date = taskDeadline.split('-') // ["2021","07","03"]
+function getButtonTypeByPriority(str) {
+    if(str === 'High') {
+        return 'btn-danger'
+    } else if(str === 'Medium') {
+        return 'btn-warning'
+    } else {
+        return 'btn-success'
+    }
+}
 
-    let deadlineString = `${date[2]} ${months[Number(date[1])]}`
+function addToDoList() {
+    
+    const taskName = document.getElementById('task-name')
+    const taskDescription = document.getElementById('task-desc')
+    const taskPrio = document.getElementById('task-prio')
+    const taskDeadline = document.getElementById('task-deadline')
+
+    if(taskName.value === '' || taskDescription.value === '' || taskPrio.value === '' || taskDeadline === '') {
+        return $('#errorModal').modal('show');
+    }
 
     // ID starts from 1
     let latestToDoListID = 0 
@@ -106,7 +204,7 @@ function addToDoList() {
     toDoList[latestToDoListID+1] = {}
     toDoList[latestToDoListID+1].taskName = taskName.value
     toDoList[latestToDoListID+1].priority = taskPrio.value
-    toDoList[latestToDoListID+1].deadline = deadlineString
+    toDoList[latestToDoListID+1].deadline = taskDeadline.value
     toDoList[latestToDoListID+1].description = taskDescription.value
 
     // Reset
@@ -114,19 +212,19 @@ function addToDoList() {
     taskPrio.value = ''
     taskDescription.value = ''
 
-
     renderToDoList()
     return toDoList
 }
 
 function deleteToDoList(id) {
     delete toDoList[id]
+    $(`#modal-${id}`).modal('hide')
     renderToDoList()
     return toDoList
 }
 
 function editToDoList() {
-    
+
 
     return toDoList
 }
