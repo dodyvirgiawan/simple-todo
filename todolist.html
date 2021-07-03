@@ -9,14 +9,15 @@
     <link href="todolist.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-fixed-top" id="navbar-todo">
-        <!-- Logo -->
+    <nav class="navbar navbar-expand-lg sticky-top" id="navbar-todo">
         <div class="container">
+
             <span class="navbar-brand" href="#">
                 <img src="assets/logo.png" width="30px" height="30px">
-                <span id="brand-name">Todos</span>
+                <span id="brand-name"><b>Todos</b> <span style="color: rgb(13,110,253)">v1.0</span></span>
             </span>
-                <a class="nav-link active" aria-current="page" href="index.html">Log out</a>
+
+            <a class="nav-link active" aria-current="page" href="index.html">Log out</a>
         </div>
     </nav>
     <br>
@@ -29,21 +30,8 @@
             </div>
         </div>
 
-        <!-- Top Description -->
-        <!-- <div class="container">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Introduction</h5>
-                    <hr>
-                    <p class="alert alert-primary">Welcome to simple to-do-list app made by <b>Dody Virgiawan</b></p>
-                    <p class="card-text description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius molestias sequi commodi illo soluta! A laboriosam, soluta ratione quaerat ipsa corporis ex officia facilis modi praesentium? Incidunt rem labore, reiciendis repellendus debitis saepe corporis nisi blanditiis esse cupiditate eius facilis quam harum tenetur ab perspiciatis, non enim earum ducimus deserunt!</b></p>
-                    <a href="#" class="btn btn-success">Create your first to do list</a>
-                </div>
-            </div>
-        </div><br> -->
-
         <!-- Add To Do List -->
-        <div class="container">
+        <div id="dir-add-todo" class="container">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Add To Do List</h5>
@@ -103,56 +91,44 @@
                     <p class="alert alert-info">You dont have any to-do-list. Start adding one!</p>
 
                     <table class="table" id="to-do-table" style="font-size: 0.8rem;">
-                        <!-- <thead>
-                        <tr>
-                            <th scope="col">Task Name</th>
-                            <th scope="col">Priority</th>
-                            <th scope="col">Deadline</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody id="tbody-to-do">
-                        <tr>
-                            <td>Go shopping</td>
-                            <td>
-                                <button type="button" class="btn btn-danger my-btn">High</button>
-                            </td>
-                            <td>4 July 2021</td>
-                            <td>
-                                <button type="button" class="btn btn-primary btn-sm my-btn">Edit</button>
-                                <button type="button" class="btn btn-danger btn-sm my-btn">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Travel</td>
-                            <td>
-                                <button type="button" class="btn btn-warning my-btn">Medium</button>
-                            </td>
-                            <td>5 July 2021</td>
-                            <td>
-                                <button type="button" class="btn btn-primary btn-sm my-btn">Edit</button>
-                                <button type="button" class="btn btn-danger btn-sm my-btn">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Go play basketball</td>
-                            <td>
-                                <button type="button" class="btn btn-success my-btn">Low</button>
-                            </td>
-                            <td>6 July 2021</td>
-                            <td>
-                                <button type="button" class="btn btn-primary btn-sm my-btn">Edit</button>
-                                <button type="button" class="btn btn-danger btn-sm my-btn">Delete</button>
-                            </td>
-                        </tr>
-                        </tbody> -->
+                        <!-- List of to do list will be injected here by todolist.js -->
                     </table>
                 </div><br>
                 <!-- End of table -->
                 
             </div>
         </div>
-    </div>
+    </div><br>
+
+    <!-- Task statistics -->
+    <div class="container text-center">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Task Statistics</h5>
+                <hr>
+                <p class="alert alert-primary">You can find your to-do-list stats below</p>
+                <div id="task-statistics">
+                    <!-- Injected by todolist.js -->
+                </div>
+            </div>
+        </div>
+    </div><br>
+
+    <!-- Footer -->
+    <footer class="bg-dark p-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-start">
+                    <small><span class = "ps-1" style="color: white;">Copyright &copy;2021 | Todos <span style="color: rgb(13,110,253)"><b>v1.0</b></span> | Dody Virgiawan </span></small>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="https://github.com/dodyvirgiawan/simple-todo" target="_blank">
+                        <img src="assets/github-light-32px.png" class="ms-2">
+                    </a>
+                </div>
+            </div>
+         </div>
+    </footer>
 
     <!-- Modals -->
     
@@ -168,7 +144,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Hi, please fill in all the form. Thank you!
+                    <div class="alert alert-info">
+                        Hi, please fill in all the form! <br><br>Thank you!
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -177,9 +155,10 @@
         </div>
     </div>
 
+    <!-- Modal collection for each to do list-->
     <div id="to-do-list-modal">
-
-    </div>
+        <!-- Modal element will be injected here by todolist.js -->
+    </div><br>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
