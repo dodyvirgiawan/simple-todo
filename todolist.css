@@ -1,0 +1,14 @@
+#navbar-todo {
+    background-color: rgb(255, 255, 255);
+    border-bottom: 2px solid rgb(226,226,226);
+    box-shadow: 0px 0px 20px rgb(212,212,212);
+}
+
+.brand-name {
+    color: rgb(33, 37, 41);
+}
+
+.description {
+    text-align: justify;
+    padding: 30px;
+}
