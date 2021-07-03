@@ -12,3 +12,17 @@
     text-align: justify;
     padding: 30px;
 }
+
+td {
+    word-break: break-all;
+}
+
+#to-do-list-container {
+    width: 80%; 
+    margin: auto;
+    border: 1px solid rgb(226,226,226);
+}
+
+.my-btn {
+    font-size: 0.8rem;
+}

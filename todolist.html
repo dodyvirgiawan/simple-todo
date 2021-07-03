@@ -63,18 +63,25 @@
                                     <input type="text" id="task-desc" placeholder="Buy apples, mangoes">
                                 </div>
                             </div>
+
                             <div class="col">
                                 <label for="task-name" class="form-label">Priority</label>
                                 <div class="input-group mb-3">
-                                    <select class="form-select form-select-sm">
+                                    <select class="form-select form-select-sm" id="task-prio">
                                         <option value="High">High</option>
                                         <option value="Medium">Medium</option>
                                         <option value="Low">Low</option>
                                     </select>
                                 </div>
                             </div>
+                                                        <div class="col">
+                                <label for="task-name" class="form-label">Task Deadline</label>
+                                <div class="input-group mb-3">
+                                    <input type="date" id="task-deadline">
+                                </div>
+                            </div>
                             <div class="col" style="padding-top: 30px;">
-                                <button type="button" class="btn btn-primary">Add</button>
+                                <button type="button" class="btn btn-primary" onclick="addToDoList()">Add</button>
                             </div>
                         </div>
                     </form>
@@ -90,70 +97,82 @@
                     <hr>
                 </div>
                 <p class="alert alert-primary">Below are your to do list</p>
-                <div class="container">
-                    <table class="table">
-                        <thead>
+
+                <!-- Beginning of table -->
+                <div id="to-do-list-container">
+                    <p class="alert alert-info">You dont have any to-do-list. Start adding one!</p>
+
+                    <table class="table" id="to-do-table" style="font-size: 0.8rem;">
+                        <!-- <thead>
                         <tr>
-                            <th scope="col">No.</th>
                             <th scope="col">Task Name</th>
-                            <th scope="col">Task Description</th>
                             <th scope="col">Priority</th>
+                            <th scope="col">Deadline</th>
                             <th scope="col">Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tbody-to-do">
                         <tr>
-                            <th scope="row">1</th>
                             <td>Go shopping</td>
-                            <td style="width:30%">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            </td>
                             <td>
-                                <button type="button" class="btn btn-danger">High</button>
+                                <button type="button" class="btn btn-danger my-btn">High</button>
                             </td>
-                            <th>
-                                <button type="button" class="btn btn-primary">Edit</button>
-                                <button type="button" class="btn btn-danger">Delete</button>
-                            </th>
+                            <td>4 July 2021</td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-sm my-btn">Edit</button>
+                                <button type="button" class="btn btn-danger btn-sm my-btn">Delete</button>
+                            </td>
                         </tr>
                         <tr>
-                            <th scope="row">2</th>
                             <td>Travel</td>
-                            <td style="width:30%">
-                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt corporis totam molestiae laborum reprehenderit labore.
-                            </td>
                             <td>
-                                <button type="button" class="btn btn-warning">Medium</button>
+                                <button type="button" class="btn btn-warning my-btn">Medium</button>
                             </td>
-                            <th>
-                                <button type="button" class="btn btn-primary">Edit</button>
-                                <button type="button" class="btn btn-danger">Delete</button>
-                            </th>
+                            <td>5 July 2021</td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-sm my-btn">Edit</button>
+                                <button type="button" class="btn btn-danger btn-sm my-btn">Delete</button>
+                            </td>
                         </tr>
                         <tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Go play basketball</td>
-                                <td style="width:30%">
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt corporis totam molestiae laborum reprehenderit labore.
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-success">Low</button>
-                                </td>
-                                <th>
-                                    <button type="button" class="btn btn-primary">Edit</button>
-                                    <button type="button" class="btn btn-danger">Delete</button>
-                                </th>
+                            <td>Go play basketball</td>
+                            <td>
+                                <button type="button" class="btn btn-success my-btn">Low</button>
+                            </td>
+                            <td>6 July 2021</td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-sm my-btn">Edit</button>
+                                <button type="button" class="btn btn-danger btn-sm my-btn">Delete</button>
+                            </td>
                         </tr>
-                        </tbody>
+                        </tbody> -->
                     </table>
-                </div>
+                </div><br>
+                <!-- End of table -->
+                
             </div>
         </div>
+    </div>
 
-
-
-
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            ...
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        </div>
     </div>
 
     <script src="todolist.js"></script>
