@@ -55,8 +55,8 @@ function renderToDoList() {
                 </td>
                 <td>${toDoList[id].deadline}</td>
                 <td>
-                    <button type="button" class="btn btn-primary btn-sm my-btn">Edit</button>
-                    <button type="button" class="btn btn-danger btn-sm my-btn">Delete</button>
+                    <button type="button" class="btn btn-primary btn-sm my-btn" onclick="editToDoList(${id})">Edit</button>
+                    <button type="button" class="btn btn-danger btn-sm my-btn" onclick="deleteToDoList(${id})">Delete</button>
                 </td>
             </tr>`
 
@@ -119,12 +119,15 @@ function addToDoList() {
     return toDoList
 }
 
-function deleteToDoList() {
-
-
-
-
+function deleteToDoList(id) {
+    delete toDoList[id]
     renderToDoList()
+    return toDoList
+}
+
+function editToDoList() {
+    
+
     return toDoList
 }
 
