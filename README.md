@@ -18,7 +18,7 @@ Language:
 - CSS
 - Javascript
 
-Technology used:
+CSS Framework:
 - Bootstrap
 
 # Preview :art:
