@@ -1,3 +1,10 @@
+/**
+ *  Todos v1.0
+ *  by Dody Virgiawan
+ *  (Repo: https://github.com/dodyvirgiawan/simple-todo)
+ * 
+ */
+
 const userDatabase = []
 
 const nameInput = document.getElementById('name-input')
