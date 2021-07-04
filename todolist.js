@@ -157,9 +157,9 @@ function renderAllEditToDoModal() {
                     <h5>Edit Task priority</h5>
                     <div class="input-group mb-3">
                         <select class="form-select form-select-sm" id="edit-task-prio-${id}" value="${toDoList[id].priority}">
-                            <option value="High" id="sel-High">High</option>
-                            <option value="Medium" id="sel-Medium">Medium</option>
-                            <option value="Low" id="sel-Low">Low</option>
+                            <option value="High" id="sel-${id}-High">High</option>
+                            <option value="Medium" id="sel-${id}-Medium">Medium</option>
+                            <option value="Low" id="sel-${id}-Low">Low</option>
                         </select>
                     </div><hr>
 
@@ -182,7 +182,7 @@ function renderAllEditToDoModal() {
         kumpulanEditModal.appendChild(newEditModal)
 
         // Update the selected option in task priority dropdown list
-        const selectedPriority = document.getElementById(`sel-${toDoList[id].priority}`)
+        const selectedPriority = document.getElementById(`sel-${id}-${toDoList[id].priority}`)
         selectedPriority.setAttribute('selected','')
     }
 
@@ -264,7 +264,7 @@ function updateToDoList(id) {
     const editedTaskPrio = document.getElementById(`edit-task-prio-${id}`)
     const editedTaskDeadline = document.getElementById(`edit-task-deadline-${id}`)
 
-    if(!editedTaskName.value || !editedTaskDesc.value || !editedTaskPrio.value || editedTaskDeadline === undefined) {
+    if(!editedTaskName.value || !editedTaskDesc.value || !editedTaskPrio.value || !editedTaskDeadline.value) {
         const errorBox = document.getElementById(`edit-error-${id}`)
         errorBox.setAttribute('class','alert alert-danger')
         errorBox.setAttribute('role','alert')
@@ -318,7 +318,7 @@ function addToDoList() {
     const taskPrio = document.getElementById('task-prio')
     const taskDeadline = document.getElementById('task-deadline')
 
-    if(!taskName.value || !taskDescription.value || !taskPrio.value || taskDeadline === undefined) {
+    if(!taskName.value || !taskDescription.value || !taskPrio.value || !taskDeadline.value) {
         return $('#errorModal').modal('show'); 
     }
 
@@ -338,6 +338,7 @@ function addToDoList() {
     taskName.value = ''
     taskPrio.value = ''
     taskDescription.value = ''
+    taskDeadline.value = ''
 
     renderToDoList()
 
