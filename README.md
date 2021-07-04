@@ -1,5 +1,5 @@
 # simple-todo :blue_book:
-Simple to-do list website, part of my mini projects.
+Simple to-do list website, part of my mini projects, created from scratch.
 
 This website is static and does not store any database yet. This is just a part of my mini project to demonstrate CRUD functionality. :)
 
