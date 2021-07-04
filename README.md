@@ -9,6 +9,7 @@ This website is static and does not store any database yet. This is just a part 
 - Delete to do list
 
 # Planned feature :wrench:
+- Mark to do list as complete
 - Add categories/tags to group to do list
 - Add search functionality
 
